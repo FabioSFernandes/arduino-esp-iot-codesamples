@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "/Users/fabiofernandes/github/arduino-iot-robot-library/esp32-wifi"
+		},
+		{
+			"name": "LEDTest",
+			"path": "/Users/fabiofernandes/Documents/PlatformIO/Projects/LEDTest"
+		},
+		{
+			"name": "robot-samples",
+			"path": "/Users/fabiofernandes/Documents/PlatformIO/Projects/robot-samples"
+		},
+		{
+			"name": "arduino-iot-codesamples-library",
+			"path": "/Users/fabiofernandes/github/arduino-iot-codesamples-library"
+		}
+	],
+	"settings": {}
+}

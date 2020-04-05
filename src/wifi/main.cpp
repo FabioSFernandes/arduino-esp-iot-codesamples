@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "service.h"
+#include "esp32_service.h"
 
 
 int ENA = D3; //4;
@@ -12,7 +12,7 @@ int IN4 = D6; //2;
 
 wifi_config *wifi;
 
-void setup() {
+void wifiSetup() {
     Serial.begin(115200);
 
     // ensure motors are turned off
@@ -30,7 +30,7 @@ void setup() {
 
 }
 
-void loop() {
+void wifiLoop() {
     // put your main code here, to run repeatedly:
     //http->
 }
