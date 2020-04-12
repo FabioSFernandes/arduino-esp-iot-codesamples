@@ -23,6 +23,10 @@ class wifi_config
         wifi_config(char *ssid, char *pwd, byte ip_address[4], byte default_gateway[4]);
         void SetConfig();
         IPAddress get_ip();
+        bool start();
+        bool stop();
+        int status();
+        IPAddress restart();
 };
 
 void wifi_config::SetConfig()
@@ -124,5 +128,33 @@ wifi_config::wifi_config(char *ssid, char *pwd, byte ip_address[4], byte default
 
 IPAddress wifi_config::get_ip()
 {
+    return WiFi.localIP();
+}
+
+bool wifi_config::start()
+{
+    IPAddress ip(_ip_addr);
+    IPAddress gateway(_default_gateway);
+    IPAddress subnet(255, 255, 255, 0);
+    WiFi.begin(_ssid, _pwd);
+    WiFi.config(ip, gateway, subnet); 
+    return true;
+}
+
+bool wifi_config::stop()
+{
+    WiFi.disconnect(true);
+    return true;
+}
+
+int wifi_config::status()
+{
+    return (int)WiFi.status();
+}
+
+IPAddress wifi_config::restart()
+{
+    this->stop();
+    this->start();
     return WiFi.localIP();
 }
