@@ -1,8 +1,29 @@
+/**
+ * @file esp32_service.h
+ * @version 1.0
+ *
+ * @section License
+ * Copyright (C) 2020, Fabio Fernandes
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * @section Description
+ * Esp code for wifi initialization.
+ */
+
 #include <ESP8266WiFi.h>
 //#include "WiFiEsp.h"
 
-const char* WIFI_SSID     = "XXXXXX";
-const char* WIFI_PASSWORD = "XXXXXX";
+const char* WIFI_SSID     = "NET_2GEF70EA";
+const char* WIFI_PASSWORD = "69EF70EA";
 
 byte ip_address[] = { 192, 168, 0, 156 }; // Enforced IP Address 
 byte gateway[] = { 192, 168,  0,   1 }; // Enforced Gateway 
@@ -33,8 +54,7 @@ void wifi_config::SetConfig()
 {
     // check for the presence of the shield:
     if (WiFi.status() == WL_NO_SHIELD) {
-        Serial.println("WiFi shield not present");
-        // don't continue:
+        Serial.println("WiFi chip not present");
         return;
     }
     
@@ -72,7 +92,7 @@ void wifi_config::SetConfig()
             Serial.write("\nConnection Lost!");
             break;
         }
-        else if ( (fcounter % 10) == 0)
+        else if ( (fcounter % 20) == 0)
         {
             Serial.println(WiFi.status());
         }

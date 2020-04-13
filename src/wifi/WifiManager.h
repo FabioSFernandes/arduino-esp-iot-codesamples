@@ -1,3 +1,23 @@
+/**
+ * @file WifiManager.h
+ * @version 1.0
+ *
+ * @section License
+ * Copyright (C) 2020, Fabio Fernandes
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * @section Description
+ * Wifi Manager.
+ */
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "esp32_service.h"
@@ -53,8 +73,11 @@ public:
     virtual int getStatus(){
         return wifi->status();
         };    
+    IPAddress ip;
     virtual void* getParameters(){
-        IPAddress ip = wifi->get_ip();
+        //IPAddress 
+        ip = wifi->get_ip();
+        //Serial.println(ip.toString());
         return (void*)&ip;
         };  
     virtual bool setParameters(void* parameters){
