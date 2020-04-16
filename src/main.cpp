@@ -20,9 +20,11 @@
  */
 #include <Arduino.h>
 #include "wifi/WifiManager.h"
-
+#include "web/WebServer.h"
 
 WifiManager *wifi;
+WebServer *server;
+
 
 void setup() {
   Serial.begin(115200);
@@ -34,6 +36,10 @@ void setup() {
   wifi = new WifiManager();
   wifi->start();
   
+
+  server = new WebServer();
+  server->webSetup();
+
   // Start webserver and api server
 
 
@@ -57,5 +63,6 @@ void loop() {
         Serial.println(ip->toString());
         Serial.println("Para acessar o webserver utilize: http://" + ip->toString() + "/ no seu browser.");
       }
+      server->webLoop();
   }
 }

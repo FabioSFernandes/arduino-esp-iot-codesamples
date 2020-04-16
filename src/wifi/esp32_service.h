@@ -22,8 +22,8 @@
 #include <ESP8266WiFi.h>
 //#include "WiFiEsp.h"
 
-const char* WIFI_SSID     = "NET_2GEF70EA";
-const char* WIFI_PASSWORD = "69EF70EA";
+const char* WIFI_SSID     = "";
+const char* WIFI_PASSWORD = "";
 
 byte ip_address[] = { 192, 168, 0, 156 }; // Enforced IP Address 
 byte gateway[] = { 192, 168,  0,   1 }; // Enforced Gateway 
