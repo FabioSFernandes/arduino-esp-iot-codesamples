@@ -34,9 +34,51 @@ int IN4 = D6; //2;
 class WebServer{ 
 
     HttpServer *http;
+    void(*callback)(HttpServer sender, String eventArgs) = NULL;
 
     //wifi_config *wifi;
     String htmlContent="<html><head><//head><body>"\
+                                                "<table style='width:100%;'>"\ 
+                                                    "<tr>"\
+                                                        "<td>"\
+                                                        "<//td>"\
+                                                        "<td width='25px'>"\
+                                                            "<form action='/left'>"\ 
+                                                                    "<input type='submit' value='Top'//><br//>"\
+                                                            "</form>"\ 
+                                                        "<//td>"\
+                                                        "<td>"\
+                                                        "<//td>"\
+                                                    "<//tr>"\
+                                                    "<tr>"\
+                                                        "<td>"\
+                                                            "<form action='/left' style='text-align:right;'>"\ 
+                                                                    "<input type='submit' value='left'//><br//>"\
+                                                            "</form>"\ 
+                                                        "<//td>"\
+                                                        "<td width='25px'>"\
+                                                        "<//td>"\
+                                                        "<td  align='left'>"\
+                                                            "<form action='/left' style='text-align:left;'>"\ 
+                                                                    "<input style='text-align:left;' type='submit' value='right'//><br//>"\
+                                                            "</form>"\ 
+                                                        "<//td>"\
+                                                    "<//tr>"\
+                                                    "<tr>"\
+                                                        "<td>"\
+                                                        "<//td>"\
+                                                        "<td width='25px'>"\
+                                                            "<form action='/left'>"\ 
+                                                                    "<input type='submit' value='Botton'//><br//>"\
+                                                            "</form>"\ 
+                                                        "<//td>"\
+                                                        "<td>"\
+                                                        "<//td>"\
+                                                    "<//tr>"\
+                                                "<//table>"\
+                                "<//body><//html>";
+
+    String htmlContent_old="<html><head><//head><body>"\
                                                 "<div>"\ 
                                                     "<form action='/left'>"\ 
                                                         "<input type='submit' value='left'//><br//>"\
@@ -54,11 +96,15 @@ class WebServer{
                                                     "</form>"\ 
                                                 "<//div>"\
                                 "<//body><//html>";
-
 public: 
+
 
     WebServer(){ 
         
+    }
+
+    void setCallBack(void(*delegate)(HttpServer sender, String eventArgs)){ 
+        callback = delegate;
     }
 
     static void webCommandSent(HttpServer sender, String eventArgs)
@@ -85,7 +131,7 @@ public:
     }
 
     void webSetup() {
-        Serial.begin(115200);
+        //Serial.begin(115200);
 
         //pinMode(ENA, OUTPUT);
         //pinMode(IN1, OUTPUT);
@@ -98,11 +144,23 @@ public:
         //wifi->SetConfig();
 
         // Starts webserver at port 80
-        http = new HttpServer(80); 
+        Serial.println("Iniciando webserver na posta 80");
+        http = new HttpServer(80);
+        Serial.println("Determinando conteudo HTML: " + htmlContent ); 
         // Sets a new html content
+
         http->set_HTMLContent(htmlContent);
+        Serial.println("Iniciando Event Handler...");
         // Handles a web event as "user action" 
-        http->AddEventHandler(&WebServer::webCommandSent);
+        if (callback==NULL){ 
+            http->AddEventHandler(&WebServer::webCommandSent);
+        }
+        else { 
+            http->AddEventHandler(callback);
+        }
+
+        Serial.println("Setup concluido...");
+        Serial.println(htmlContent);
     }
 
     void webLoop() {

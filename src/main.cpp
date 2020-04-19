@@ -25,6 +25,29 @@
 WifiManager *wifi;
 WebServer *server;
 
+void webActionHandler(HttpServer sender, String eventArgs){
+      Serial.println("Novo evento HTTP:");
+      Serial.println(eventArgs);
+
+      // Do something with event
+      if (eventArgs!=NULL)
+      {
+          if (eventArgs.indexOf("forward") >= 0) {
+              // move both motors foward
+          }
+          else if (eventArgs.indexOf("backward") >= 0) {
+              // move both motors foward
+          }
+          else if (eventArgs.indexOf("left") >= 0) {
+              // move left motors backward
+              // move right motors foward
+          }
+          else if (eventArgs.indexOf("right") >= 0) {
+              // move left motors foward
+              // move right motors backward
+          }
+      }
+}
 
 void setup() {
   Serial.begin(115200);
@@ -38,13 +61,16 @@ void setup() {
   
 
   server = new WebServer();
+  Serial.println("Setup - Starting websetup");
+  server->setCallBack(&webActionHandler);
   server->webSetup();
+  Serial.println("Setup - Finishing websetup");
 
   // Start webserver and api server
 
 
   
-  Serial.println("Setup - Finishing main appication path");
+  Serial.println("Setup - Finishing main application path");
 }
 
 bool printStatus = false;

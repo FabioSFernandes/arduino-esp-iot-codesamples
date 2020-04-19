@@ -36,6 +36,7 @@ class HttpServer
         void AddEventHandler(void(*eventMethod)(HttpServer sender, String eventArgs));
         void Loop();
         void set_HTMLContent(String content);
+        void set_header(String key, String value);
 };
 
 
@@ -69,6 +70,7 @@ void HttpServer::set_HTMLContent(String newContent)
 {
     Serial.println("Set HTML Content");
     this->_content = newContent;
+    //this->srv->
     Serial.println(this->_content);
     Serial.write("...done!");
 }
@@ -97,6 +99,14 @@ void HttpServer::Loop()
             break;
         }
         Serial.println("Send content to client...");
+        //cli.write("Content-Type: text/html");
+        //cli.
+         
+        cli.println("HTTP/1.1 200 OK"); //ESCREVE PARA O CLIENTE A VERSÃO DO HTTP
+        cli.println("Content-Type: text/html"); //ESCREVE PARA O CLIENTE O TIPO DE CONTEÚDO(texto/html)
+        cli.println("");
+        cli.println("<!DOCTYPE HTML>"); //INFORMA AO NAVEGADOR A ESPECIFICAÇÃO DO HTML
+
         cli.write(this->_content.c_str());
         cli.stop();
         Serial.write("...done!");
