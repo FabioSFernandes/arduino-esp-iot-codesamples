@@ -19,7 +19,11 @@
  * Http Server to handle consumers requests
  */
 
-#include <ESP8266WiFi.h>
+#if defined ESP8266
+  #include <ESP8266WiFi.h>
+#elif defined ESP32
+  #include <WiFi.h>
+#endif
 #include "response.h"
 
 class HttpServer
@@ -45,6 +49,7 @@ HttpServer::HttpServer(int port)
     Serial.println("Starting Server...");
     this->srv = new WiFiServer(port);
     this->srv->begin(port);
+    this->srv->setNoDelay(1);
     Serial.write("...done!");
 }
 
@@ -56,6 +61,7 @@ HttpServer::HttpServer()
     int port = 80;
     this->srv = new WiFiServer(port);
     this->srv->begin(port);
+    
     Serial.write("...done!");
 }
 
@@ -109,6 +115,6 @@ void HttpServer::Loop()
 
         cli.write(this->_content.c_str());
         cli.stop();
-        Serial.write("...done!");
+        Serial.write("...cli.stop() called... DONE!");
     }
 }

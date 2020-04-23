@@ -19,11 +19,15 @@
  * Esp code for wifi initialization.
  */
 
-#include <ESP8266WiFi.h>
+#if defined ESP8266
+  #include <ESP8266WiFi.h>
+#elif defined ESP32
+  #include <WiFi.h>
+#endif//#include <esp
 //#include "WiFiEsp.h"
 
-const char* WIFI_SSID     = "";
-const char* WIFI_PASSWORD = "";
+const char* WIFI_SSID     = "NET_2GEF70EA";
+const char* WIFI_PASSWORD = "69EF70EA";
 
 byte ip_address[] = { 192, 168, 0, 156 }; // Enforced IP Address 
 byte gateway[] = { 192, 168,  0,   1 }; // Enforced Gateway 
@@ -156,6 +160,8 @@ bool wifi_config::start()
     IPAddress ip(_ip_addr);
     IPAddress gateway(_default_gateway);
     IPAddress subnet(255, 255, 255, 0);
+    WiFi.mode(WIFI_STA);
+    //Esp_wifi_set_ps (WIFI_PS_NONE);
     WiFi.begin(_ssid, _pwd);
     WiFi.config(ip, gateway, subnet); 
     return true;

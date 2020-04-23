@@ -31,10 +31,18 @@ int IN3 = D5; //0;
 int IN4 = D6; //2;
 */
 
+/*extern const uint8_t index_html_end[] asm("_binary_src_index_html_start");
+//Serial.println((const char *)_index_html_start);
+
+const char * read_file_contents(){ 
+    return (const char *)index_html_end;
+};
+*/
 class WebServer{ 
 
     HttpServer *http;
     void(*callback)(HttpServer sender, String eventArgs) = NULL;
+
 
     //wifi_config *wifi;
     String htmlContent="<html><head><//head><body>"\
@@ -43,8 +51,8 @@ class WebServer{
                                                         "<td>"\
                                                         "<//td>"\
                                                         "<td width='25px'>"\
-                                                            "<form action='/left'>"\ 
-                                                                    "<input type='submit' value='Top'//><br//>"\
+                                                            "<form action='/foward'>"\ 
+                                                                    "<input type='submit' value='Foward'//><br//>"\
                                                             "</form>"\ 
                                                         "<//td>"\
                                                         "<td>"\
@@ -53,14 +61,14 @@ class WebServer{
                                                     "<tr>"\
                                                         "<td>"\
                                                             "<form action='/left' style='text-align:right;'>"\ 
-                                                                    "<input type='submit' value='left'//><br//>"\
+                                                                    "<input type='submit' value='Left'//><br//>"\
                                                             "</form>"\ 
                                                         "<//td>"\
                                                         "<td width='25px'>"\
                                                         "<//td>"\
                                                         "<td  align='left'>"\
-                                                            "<form action='/left' style='text-align:left;'>"\ 
-                                                                    "<input style='text-align:left;' type='submit' value='right'//><br//>"\
+                                                            "<form action='/right' style='text-align:left;'>"\ 
+                                                                    "<input style='text-align:left;' type='submit' value='Right'//><br//>"\
                                                             "</form>"\ 
                                                         "<//td>"\
                                                     "<//tr>"\
@@ -68,8 +76,8 @@ class WebServer{
                                                         "<td>"\
                                                         "<//td>"\
                                                         "<td width='25px'>"\
-                                                            "<form action='/left'>"\ 
-                                                                    "<input type='submit' value='Botton'//><br//>"\
+                                                            "<form action='/back'>"\ 
+                                                                    "<input type='submit' value='Back'//><br//>"\
                                                             "</form>"\ 
                                                         "<//td>"\
                                                         "<td>"\
@@ -161,6 +169,10 @@ public:
 
         Serial.println("Setup concluido...");
         Serial.println(htmlContent);
+
+        // Serial.println("HTML lido dinamicamente...");
+        // Serial.println(read_file_contents());
+        
     }
 
     void webLoop() {

@@ -1,4 +1,5 @@
-
+#if !defined __DeviceManagerInterface__
+#define __DeviceManagerInterface__
 class IDeviceManager{ 
     virtual void* start();         // returns a start object info 
     virtual bool  stop();           // just returns a bool if finished succeed
@@ -8,3 +9,4 @@ class IDeviceManager{
     virtual void* getParameters(); // getParameterSettings for the device 
     virtual bool  setParameters(void* parameters); // setParameterSettings for the device 
 };
+#endif

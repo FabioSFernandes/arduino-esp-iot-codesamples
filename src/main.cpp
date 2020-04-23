@@ -21,30 +21,46 @@
 #include <Arduino.h>
 #include "wifi/WifiManager.h"
 #include "web/WebServer.h"
+#include "drivers/ln298h/Ln298Controller.h"
 
 WifiManager *wifi;
 WebServer *server;
+Ln298Manager *platform;
 
 void webActionHandler(HttpServer sender, String eventArgs){
       Serial.println("Novo evento HTTP:");
       Serial.println(eventArgs);
 
+      Serial.println("Eventargs: " + eventArgs);
+
       // Do something with event
       if (eventArgs!=NULL)
       {
-          if (eventArgs.indexOf("forward") >= 0) {
+          if (eventArgs.indexOf("foward") >= 0) {
               // move both motors foward
+              Serial.println("foward...begin");
+              platform->gofoward();
+              Serial.println("foward...done");
           }
-          else if (eventArgs.indexOf("backward") >= 0) {
+          else if (eventArgs.indexOf("back") >= 0) {
               // move both motors foward
+              Serial.println("back...begin");
+              platform->gobackward();
+              Serial.println("back...done");
           }
           else if (eventArgs.indexOf("left") >= 0) {
-              // move left motors backward
-              // move right motors foward
+              // move left motor backward
+              // move right motor foward
+              Serial.println("left...begin");
+              platform->turnLeft();
+              Serial.println("left...done");
           }
           else if (eventArgs.indexOf("right") >= 0) {
               // move left motors foward
               // move right motors backward
+              Serial.println("right...begin");
+              platform->turnRight();
+              Serial.println("right...done");
           }
       }
 }
@@ -59,6 +75,9 @@ void setup() {
   wifi = new WifiManager();
   wifi->start();
   
+  // 
+  // read_file_contents();
+  
 
   server = new WebServer();
   Serial.println("Setup - Starting websetup");
@@ -67,7 +86,8 @@ void setup() {
   Serial.println("Setup - Finishing websetup");
 
   // Start webserver and api server
-
+  platform = new Ln298Manager();
+  platform->start();
 
   
   Serial.println("Setup - Finishing main application path");
@@ -78,7 +98,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (wifi->getStatus()!=WL_CONNECTED) { 
     Serial.print(".");
-    delay(1000);
+    delay(100);
   }
   else { 
       if (!printStatus){ 
